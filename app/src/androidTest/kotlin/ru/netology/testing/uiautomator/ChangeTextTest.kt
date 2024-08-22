@@ -99,7 +99,7 @@ class ChangeTextTest {
 //        ).click()
 //    }
 
-//    @Test //2
+    //    @Test //2
 //    fun testChangeText() {
 //        val packageName = MODEL_PACKAGE
 //        waitForPackage(packageName)
@@ -110,22 +110,22 @@ class ChangeTextTest {
 //        val result = device.findObject(By.res(packageName, "textToBeChanged")).text
 //        assertEquals(result, textToSet)
 //    }
-@Test //2
-fun testChangeText1() {
-    val context = ApplicationProvider.getApplicationContext<Context>()
-    val intent = context.packageManager.getLaunchIntentForPackage(MODEL_PACKAGE)
-    context.startActivity(intent)
+    @Test //2
+    fun testChangeText1() {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val intent = context.packageManager.getLaunchIntentForPackage(MODEL_PACKAGE)
+        context.startActivity(intent)
 
-    device.wait(Until.hasObject(By.pkg(MODEL_PACKAGE)), TIMEOUT)
-    device.findObject(By.res(MODEL_PACKAGE, "userInput")).text = textToSet
-    device.findObject(By.res(MODEL_PACKAGE, "buttonChange")).click()
+        device.wait(Until.hasObject(By.pkg(MODEL_PACKAGE)), TIMEOUT)
+        device.findObject(By.res(MODEL_PACKAGE, "userInput")).text = textToSet
+        device.findObject(By.res(MODEL_PACKAGE, "buttonChange")).click()
 
-    val result = device.findObject(By.res(MODEL_PACKAGE, "textToBeChanged")).text
-    assertEquals(textToSet, result)
+        val result = device.findObject(By.res(MODEL_PACKAGE, "textToBeChanged")).text
+        assertEquals(textToSet, result)
 
-    Thread.sleep(5000)
+        Thread.sleep(5000)
 
-}
+    }
 //    @Test //3
 //    fun testEmptyText() {
 //        val context = ApplicationProvider.getApplicationContext<Context>()
@@ -168,6 +168,7 @@ fun testChangeText1() {
 
 
 }
+
 
 
 
