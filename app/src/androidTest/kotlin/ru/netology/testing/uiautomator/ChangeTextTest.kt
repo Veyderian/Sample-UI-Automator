@@ -24,28 +24,27 @@ class ChangeTextTest {
 
     private lateinit var device: UiDevice
     private val textToSet = "Netology"
-    //private val textToSet1 = " "
 
-    @Test //1
-    fun testInternetSettings1() {
-        // Press home
-        device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
-        device.pressHome()
-
-        // Wait for launcher
-        val launcherPackage = device.launcherPackageName
-        device.wait(Until.hasObject(By.pkg(launcherPackage)), TIMEOUT)
-        waitForPackage(SETTINGS_PACKAGE)
-
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        val intent = context.packageManager.getLaunchIntentForPackage(SETTINGS_PACKAGE)
-        context.startActivity(intent)
-        device.wait(Until.hasObject(By.pkg(SETTINGS_PACKAGE)), TIMEOUT)
-
-        device.findObject(
-            UiSelector().resourceId("android:id/title").instance(0)
-        ).click()
-    }
+//    @Test //1
+//    fun testInternetSettings1() {
+//        // Press home
+//        device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+//        device.pressHome()
+//
+//        // Wait for launcher
+//        val launcherPackage = device.launcherPackageName
+//        device.wait(Until.hasObject(By.pkg(launcherPackage)), TIMEOUT)
+//        waitForPackage(SETTINGS_PACKAGE)
+//
+//        val context = ApplicationProvider.getApplicationContext<Context>()
+//        val intent = context.packageManager.getLaunchIntentForPackage(SETTINGS_PACKAGE)
+//        context.startActivity(intent)
+//        device.wait(Until.hasObject(By.pkg(SETTINGS_PACKAGE)), TIMEOUT)
+//
+//        device.findObject(
+//            UiSelector().resourceId("android:id/title").instance(0)
+//        ).click()
+//    }
 
 //    @Test
 //    fun testChangeText() {
@@ -90,83 +89,76 @@ class ChangeTextTest {
         device.wait(Until.hasObject(By.pkg(launcherPackage)), TIMEOUT)
     }
 
-//    @Test
-//    fun testInternetSettings() {
-//        waitForPackage(SETTINGS_PACKAGE)
-//
-//        device.findObject(
-//            UiSelector().resourceId("android:id/title").instance(0)
-//        ).click()
-//    }
+    @Test //1
+    fun testInternetSettings() {
+        waitForPackage(SETTINGS_PACKAGE)
 
-    //    @Test //2
-//    fun testChangeText() {
-//        val packageName = MODEL_PACKAGE
-//        waitForPackage(packageName)
-//
-//        device.findObject(By.res(packageName, "userInput")).text = textToSet
-//        device.findObject(By.res(packageName, "buttonChange")).click()
-//
-//        val result = device.findObject(By.res(packageName, "textToBeChanged")).text
-//        assertEquals(result, textToSet)
-//    }
-    @Test //2
-    fun testChangeText1() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        val intent = context.packageManager.getLaunchIntentForPackage(MODEL_PACKAGE)
-        context.startActivity(intent)
-
-        device.wait(Until.hasObject(By.pkg(MODEL_PACKAGE)), TIMEOUT)
-        device.findObject(By.res(MODEL_PACKAGE, "userInput")).text = textToSet
-        device.findObject(By.res(MODEL_PACKAGE, "buttonChange")).click()
-
-        val result = device.findObject(By.res(MODEL_PACKAGE, "textToBeChanged")).text
-        assertEquals(textToSet, result)
-
-        Thread.sleep(5000)
-
+        device.findObject(
+            UiSelector().resourceId("android:id/title").instance(0)
+        ).click()
     }
-//    @Test //3
-//    fun testEmptyText() {
+
+    @Test //2
+    fun testChangeText() {
+        val packageName = MODEL_PACKAGE
+        waitForPackage(packageName)
+
+        device.findObject(By.res(packageName, "userInput")).text = textToSet
+        device.findObject(By.res(packageName, "buttonChange")).click()
+
+        val result = device.findObject(By.res(packageName, "textToBeChanged")).text
+        assertEquals(result, textToSet)
+    }
+
+    //    @Test 
+//    fun testChangeText1() {
 //        val context = ApplicationProvider.getApplicationContext<Context>()
 //        val intent = context.packageManager.getLaunchIntentForPackage(MODEL_PACKAGE)
 //        context.startActivity(intent)
 //
 //        device.wait(Until.hasObject(By.pkg(MODEL_PACKAGE)), TIMEOUT)
-//        device.findObject(By.res(MODEL_PACKAGE, "userInput")).text = textToSet1
+//        device.findObject(By.res(MODEL_PACKAGE, "userInput")).text = textToSet
 //        device.findObject(By.res(MODEL_PACKAGE, "buttonChange")).click()
 //
 //        val result = device.findObject(By.res(MODEL_PACKAGE, "textToBeChanged")).text
-//        assertEquals(textToSet1, result)
+//        assertEquals(textToSet, result)
 //
 //        Thread.sleep(5000)
 //
 //    }
+    @Test //3
+    fun testEmptyText() {
+        val packageName = MODEL_PACKAGE
+        waitForPackage(packageName)
+
+
+        device.wait(Until.hasObject(By.pkg(MODEL_PACKAGE)), TIMEOUT)
+        val initialText = device.findObject(By.res(packageName, "textToBeChanged")).text
+        device.findObject(By.res(MODEL_PACKAGE, "userInput")).text = " "
+        device.findObject(By.res(MODEL_PACKAGE, "buttonChange")).click()
+
+        val result = device.findObject(By.res(MODEL_PACKAGE, "textToBeChanged")).text
+        assertEquals(result, initialText)
+
+        Thread.sleep(5000)
+
+    }
 
     @Test //4
     fun testOpenAnotherActivityText() {
         val packageName = MODEL_PACKAGE
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        val intent = context.packageManager.getLaunchIntentForPackage(MODEL_PACKAGE)
-        context.startActivity(intent)
+        waitForPackage(packageName)
 
-        device.wait(Until.hasObject(By.pkg(MODEL_PACKAGE)), TIMEOUT)
         device.findObject(By.res(MODEL_PACKAGE, "userInput")).text = textToSet
         device.findObject(By.res(MODEL_PACKAGE, "buttonActivity")).click()
 
-
-//        val packageName1 = context.packageName
-//        device.wait(Until.hasObject(By.pkg(packageName)), TIMEOUT)
         device.wait(Until.hasObject(By.pkg(MODEL_PACKAGE)), TIMEOUT)
 
         val result = device.findObject(By.res(MODEL_PACKAGE, "text")).text
         assertEquals(textToSet, result)
 
         Thread.sleep(5000)
-
     }
-
-
 }
 
 
